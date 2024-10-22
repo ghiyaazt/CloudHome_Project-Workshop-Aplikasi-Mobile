@@ -8,114 +8,121 @@ class AplikasiSaya extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HalamanDashboard(),
+      debugShowCheckedModeBanner: false,
+      home: LayarDaftar(),
     );
   }
 }
 
-class HalamanDashboard extends StatelessWidget {
+class LayarDaftar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('CloudHome'),
-        backgroundColor: Colors.blue[800],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue[300]!, Colors.blue[900]!],
+          ),
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Logo dan judul CloudHome
+            Icon(Icons.cloud, size: 80, color: Colors.white),
             Text(
-              'Selamat Siang, Pengguna',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            Card(
-              color: Colors.blue[100],
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Text(
-                      'Cuaca Hari ini',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      '24 September 2024',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.wb_sunny, size: 50),
-                        Icon(Icons.cloud, size: 50),
-                        Icon(Icons.cloud, size: 50),
-                        Icon(Icons.wb_cloudy, size: 50),
-                      ],
-                    ),
-                  ],
-                ),
+              "CloudHome",
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: Card(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text('Suhu'),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Card(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text('Kelembaban'),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Center(
+            SizedBox(height: 30),
+
+            // Kontainer form login
+            Container(
+              padding: EdgeInsets.all(20),
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Column(
                 children: [
-                  Text('CLOTHSLINE', style: TextStyle(fontSize: 18)),
-                  IconButton(
-                    icon: Icon(Icons.power_settings_new, size: 50),
+                  // Kolom Username
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Nama Pengguna",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.person),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  // Kolom Password
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Kata Sandi",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: Icon(Icons.visibility_off),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  // Kolom Konfirmasi Password
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Ulangi Kata Sandi",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: Icon(Icons.visibility_off),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  // Tombol Daftar
+                  ElevatedButton(
                     onPressed: () {
-                      // Tambahkan fungsionalitas di sini
+                      // Aksi ketika tombol daftar ditekan
                     },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Daftar",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+
+                  // Tombol Kembali
+                  TextButton(
+                    onPressed: () {
+                      // Aksi ketika tombol kembali ditekan
+                    },
+                    child: Text(
+                      "Kembali",
+                      style: TextStyle(color: Colors.blue),
+                    ),
                   ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.wb_cloudy),
-            label: 'Cuaca',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.wb_sunny),
-            label: 'Ramalan',
-          ),
-        ],
       ),
     );
   }
