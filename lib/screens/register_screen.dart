@@ -1,2 +1,0 @@
-//twitttttt
-//tes saruduatiga

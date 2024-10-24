@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'weather_screen.dart'; // Pastikan Anda juga membuat file ini untuk layar cuaca
+import 'home.dart';
 
 class LayarLogin extends StatelessWidget {
   @override
@@ -67,7 +68,7 @@ class LayarLogin extends StatelessWidget {
                       // Navigasi ke halaman cuaca setelah login
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LayarCuaca()),
+                        MaterialPageRoute(builder: (context) => CloudHomeApp()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
