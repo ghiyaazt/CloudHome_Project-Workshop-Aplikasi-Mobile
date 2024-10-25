@@ -14,4 +14,4 @@ dependencies:
 # Ini digunakan untuk mengelola assets seperti gambar atau font
 flutter:
   assets:
-    - assets/images/logo1 1.png
+    - assets/images/

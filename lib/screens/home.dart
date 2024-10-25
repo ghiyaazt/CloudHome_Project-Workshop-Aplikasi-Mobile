@@ -76,25 +76,35 @@ class Beranda extends StatelessWidget {
               ],
             ),
             SizedBox(height: 30),
-            // Tombol untuk CLOTHSLINE
+            // Bagian CLOTHSLINE
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Tambahkan aksi tombol di sini
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                child: Column(
+                  children: [
+                    // Add the image here
+                    Image.asset(
+                      'assets/images/power (1) 2.png',
+                      height: 150,  // You can adjust the size
                     ),
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: Text(
-                    'CLOTHSLINE',
-                    style: TextStyle(fontSize: 18),
-                  ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Tambahkan aksi tombol di sini
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        backgroundColor: Colors.blue,
+                      ),
+                      child: Text(
+                        'CLOTHSLINE',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
