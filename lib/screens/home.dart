@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Untuk ikon cuaca
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() => runApp(CloudHomeApp());
 
@@ -25,7 +25,6 @@ class Beranda extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Bagian salam dan tanggal
             Text(
               'Selamat Siang, User',
               style: TextStyle(
@@ -34,7 +33,6 @@ class Beranda extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            // Bagian cuaca hari ini
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -53,7 +51,6 @@ class Beranda extends StatelessWidget {
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 10),
-                  // Ikon cuaca (kamu bisa menyesuaikan sesuai kebutuhan)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -67,7 +64,35 @@ class Beranda extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            // Bagian suhu dan kelembaban
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'Informasi Tambahan',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Ini adalah kotak putih untuk informasi tambahan.',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -76,16 +101,24 @@ class Beranda extends StatelessWidget {
               ],
             ),
             SizedBox(height: 30),
-            // Bagian CLOTHSLINE
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Add the image here
-                    Image.asset(
-                      'assets/images/power (1) 2.png',
-                      height: 150,  // You can adjust the size
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue,
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/power (1) 2.png',
+                          height: 150,
+                        ),
+                      ),
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(
@@ -114,23 +147,22 @@ class Beranda extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
+            icon: ImageIcon(AssetImage('assets/images/iot 1.png')), // Gambar ikon untuk IoT
+            label: 'IoT',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.cloud),
+            icon: ImageIcon(AssetImage('assets/images/home (3) 1.png')), // Gambar ikon untuk Home
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/images/snowing 2.png')), // Gambar ikon untuk Cuaca
             label: 'Cuaca',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Pengaturan',
           ),
         ],
       ),
     );
   }
 
-  // Widget untuk menampilkan kartu informasi suhu dan kelembaban
   Widget _infoCard(String title, String value) {
     return Container(
       padding: EdgeInsets.all(16),
