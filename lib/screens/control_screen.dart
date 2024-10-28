@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(AplikasiSaya());
+  runApp(MenuControl());
 }
 
-class AplikasiSaya extends StatelessWidget {
+class MenuControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

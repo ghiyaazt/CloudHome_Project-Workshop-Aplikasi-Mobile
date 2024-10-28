@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'weather_screen.dart'; // Pastikan Anda juga membuat file ini untuk layar cuaca
+// Pastikan Anda juga membuat file ini untuk layar cuaca
 import 'home.dart';
 
 class LayarLogin extends StatelessWidget {

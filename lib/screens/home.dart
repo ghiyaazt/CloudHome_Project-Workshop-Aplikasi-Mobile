@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'control_screen.dart';
+import 'iot.dart';
 
 void main() => runApp(CloudHomeApp());
 
@@ -54,10 +56,14 @@ class Beranda extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(FontAwesomeIcons.sun, size: 40, color: Colors.orange),
-                      Icon(FontAwesomeIcons.cloud, size: 40, color: Colors.grey),
-                      Icon(FontAwesomeIcons.cloudRain, size: 40, color: Colors.blue),
-                      Icon(FontAwesomeIcons.snowflake, size: 40, color: Colors.lightBlue),
+                      Icon(FontAwesomeIcons.sun,
+                          size: 40, color: Colors.orange),
+                      Icon(FontAwesomeIcons.cloud,
+                          size: 40, color: Colors.grey),
+                      Icon(FontAwesomeIcons.cloudRain,
+                          size: 40, color: Colors.blue),
+                      Icon(FontAwesomeIcons.snowflake,
+                          size: 40, color: Colors.lightBlue),
                     ],
                   ),
                 ],
@@ -126,7 +132,8 @@ class Beranda extends StatelessWidget {
                         // Tambahkan aksi tombol di sini
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -145,17 +152,41 @@ class Beranda extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) {
+          if (index == 0) {
+            // Navigasi ke layar IoT
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => IotScreen()),
+            );
+          } else if (index == 1) {
+            // Navigasi ke layar Home
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CloudHomeApp()),
+            );
+          } else if (index == 2) {
+            // Navigasi ke layar Cuaca
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MenuControl()),
+            );
+          }
+        },
         items: [
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/iot 1.png')), // Gambar ikon untuk IoT
+            icon: ImageIcon(
+                AssetImage('assets/images/iot 1.png')), // Gambar ikon untuk IoT
             label: 'IoT',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/home (3) 1.png')), // Gambar ikon untuk Home
+            icon: ImageIcon(AssetImage(
+                'assets/images/home (3) 1.png')), // Gambar ikon untuk Home
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/snowing 2.png')), // Gambar ikon untuk Cuaca
+            icon: ImageIcon(AssetImage(
+                'assets/images/snowing 2.png')), // Gambar ikon untuk Cuaca
             label: 'Cuaca',
           ),
         ],
