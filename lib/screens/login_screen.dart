@@ -18,8 +18,15 @@ class LayarLogin extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Logo dan judul CuacaApp
-            Icon(Icons.wb_sunny, size: 80, color: Colors.white),
+            // Gambar logo CuacaApp dengan ukuran lebih besar
+            Image.asset(
+              'assets/images/logo3 2.png', // Ganti dengan nama file gambar Anda
+              width: 150, // Ukuran diperbesar
+              height: 150, // Ukuran diperbesar
+            ),
+            SizedBox(height: 10), // Jarak antara logo dan judul
+
+            // Judul CuacaApp
             Text(
               "CuacaApp",
               style: TextStyle(
@@ -45,10 +52,13 @@ class LayarLogin extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: "Nama Pengguna",
                       border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.person),
+                      prefixIcon: ImageIcon(
+                        AssetImage('assets/images/profile.png'), // Gambar untprofile.pnguk Username
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
 
                   // Kolom Password
                   TextField(
@@ -56,11 +66,14 @@ class LayarLogin extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: "Kata Sandi",
                       border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: ImageIcon(
+                        AssetImage('assets/images/padlock.png'), // Gambar untuk Password
+                        color: Colors.black
+                      ),
                       suffixIcon: Icon(Icons.visibility_off),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
 
                   // Tombol Masuk
                   ElevatedButton(

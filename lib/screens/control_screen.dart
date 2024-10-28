@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'home.dart';
+import 'iot.dart';
 
 void main() {
   runApp(MenuControl());
@@ -71,23 +73,46 @@ class _HalamanUtamaState extends State<HalamanUtama> {
           ],
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) {
+          if (index == 0) {
+            // Navigasi ke layar IoT
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => IotScreen()),
+            );
+          } else if (index == 1) {
+            // Navigasi ke layar Home
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CloudHomeApp()),
+            );
+          } else if (index == 2) {
+            // Navigasi ke layar Cuaca
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MenuControl()),
+            );
+          }
+        },
         items: [
           BottomNavigationBarItem(
-            icon: Image.asset('assets/images/iot 1.png', width: 24, height: 24),
+            icon: ImageIcon(
+                AssetImage('t/images/iot 1.png')), // Gambar ikon untuk IoT
             label: 'IoT',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset('assets/images/home (3) 1.png', width: 24, height: 24),
-            label: 'Home ',
+            icon: ImageIcon(AssetImage(
+                'assets/images/home (3) 1.png')), // Gambar ikon untuk Home
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset('assets/images/snowing 2.png', width: 24, height: 24),
+            icon: ImageIcon(AssetImage(
+                'assets/images/snowing 2.png')), // Gambar ikon untuk Cuaca
             label: 'Cuaca',
           ),
         ],
-        currentIndex: _indexTerpilih,
-        onTap: _onItemTapped,
       ),
     );
   }
