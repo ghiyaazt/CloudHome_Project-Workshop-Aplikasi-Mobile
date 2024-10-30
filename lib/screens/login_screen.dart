@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'register_screen.dart'; // Pastikan untuk mengimpor halaman register Anda
 
 class LayarLogin extends StatelessWidget {
   @override
@@ -96,6 +97,24 @@ class LayarLogin extends StatelessWidget {
                     },
                     child: Text(
                       "Kembali",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+
+                  // Tombol Register
+                  SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () {
+                      // Navigasi ke halaman register
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                LayarRegister()), // Ganti dengan halaman register Anda
+                      );
+                    },
+                    child: Text(
+                      "Daftar",
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),
