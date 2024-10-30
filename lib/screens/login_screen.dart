@@ -18,25 +18,6 @@ class LayarLogin extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Gambar logo CuacaApp dengan ukuran lebih besar
-            Image.asset(
-              'assets/images/logo3 2.png', // Ganti dengan nama file gambar Anda
-              width: 150, // Ukuran diperbesar
-              height: 150, // Ukuran diperbesar
-            ),
-            SizedBox(height: 10), // Jarak antara logo dan judul
-
-            // Judul CuacaApp
-            Text(
-              "CuacaApp",
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 30),
-
             // Kontainer form login
             Container(
               padding: EdgeInsets.all(20),
@@ -47,13 +28,22 @@ class LayarLogin extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  // Gambar logo CuacaApp di dalam form login
+                  Image.asset(
+                    'assets/images/logo3 2.png', // Ganti dengan nama file gambar Anda
+                    width: 100, // Ukuran diperbesar
+                    height: 100, // Ukuran diperbesar
+                  ),
+                  SizedBox(height: 10), // Jarak antara logo dan kolom username
+
                   // Kolom Username
                   TextField(
                     decoration: InputDecoration(
                       labelText: "Nama Pengguna",
                       border: OutlineInputBorder(),
                       prefixIcon: ImageIcon(
-                        AssetImage('assets/images/profile.png'), // Gambar untprofile.pnguk Username
+                        AssetImage(
+                            'assets/images/profile.png'), // Gambar untuk Username
                         color: Colors.black,
                       ),
                     ),
@@ -67,9 +57,9 @@ class LayarLogin extends StatelessWidget {
                       labelText: "Kata Sandi",
                       border: OutlineInputBorder(),
                       prefixIcon: ImageIcon(
-                        AssetImage('assets/images/padlock.png'), // Gambar untuk Password
-                        color: Colors.black
-                      ),
+                          AssetImage(
+                              'assets/images/padlock.png'), // Gambar untuk Password
+                          color: Colors.black),
                       suffixIcon: Icon(Icons.visibility_off),
                     ),
                   ),

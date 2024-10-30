@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'iot.dart';
 
-void main() {
-  runApp(MenuControl());
-}
-
 class MenuControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,11 +35,15 @@ class _HalamanUtamaState extends State<HalamanUtama> {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Image.asset('assets/images/logo1 2.png'), // Ganti dengan path gambar logo
+          child: Image.asset(
+              'assets/images/logo1 2.png'), // Ganti dengan path gambar logo
         ),
-        title: Image.asset('assets/images/cloudhome 2.png', height: 40), // Ganti dengan path gambar yang diinginkan
+        title: Image.asset('assets/images/cloudhome 2.png',
+            height: 40), // Ganti dengan path gambar yang diinginkan
         actions: [
-          SizedBox(width: 48), // Tambahkan jarak kosong untuk memastikan teks tetap di tengah
+          SizedBox(
+              width:
+                  48), // Tambahkan jarak kosong untuk memastikan teks tetap di tengah
         ],
       ),
       body: Padding(
@@ -57,8 +57,10 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             ),
             SizedBox(height: 10),
             _buildDeviceButton('CLOTHSLINE', 'assets/images/drying 2.png'),
-            _buildDeviceButton('TEMPERATUR DAN KELEMBABAN', 'assets/images/humidity (1) 1.png'),
-            _buildDeviceButton('KONTROL LED', 'assets/images/light-bulb (1) 1.png'),
+            _buildDeviceButton('TEMPERATUR DAN KELEMBABAN',
+                'assets/images/humidity (1) 1.png'),
+            _buildDeviceButton(
+                'KONTROL LED', 'assets/images/light-bulb (1) 1.png'),
             SizedBox(height: 20),
             Text(
               'Notifikasi',
@@ -73,7 +75,6 @@ class _HalamanUtamaState extends State<HalamanUtama> {
           ],
         ),
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           if (index == 0) {
@@ -125,7 +126,8 @@ class _HalamanUtamaState extends State<HalamanUtama> {
           padding: EdgeInsets.symmetric(vertical: 15),
           backgroundColor: Colors.blue[700],
         ),
-        icon: Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
+        icon:
+            Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
         label: Text(label, style: TextStyle(color: Colors.white)),
         onPressed: () {
           // Tambahkan fungsi sesuai kebutuhan
@@ -134,11 +136,13 @@ class _HalamanUtamaState extends State<HalamanUtama> {
     );
   }
 
-  Widget _buildNotificationCard(String title, String message, String imagePath) {
+  Widget _buildNotificationCard(
+      String title, String message, String imagePath) {
     return Card(
       color: Colors.grey[200],
       child: ListTile(
-        leading: Image.asset(imagePath, width: 40, height: 40), // Ganti Icon dengan Image.asset
+        leading: Image.asset(imagePath,
+            width: 40, height: 40), // Ganti Icon dengan Image.asset
         title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(message),
       ),
