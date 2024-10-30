@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home.dart'; // Pastikan file ini berisi definisi `CloudHomeApp`.
-import 'control_screen.dart'; // Pastikan file ini berisi layar `cuaca` yang Anda maksud.
+import 'home.dart';
+import 'control_screen.dart';
 
 class iotscreen extends StatelessWidget {
   @override
@@ -94,9 +94,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             // Navigasi ke layar Cuaca
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      cuaca()), // Pastikan CuacaScreen ada di control_screen.dart
+              MaterialPageRoute(builder: (context) => cuaca()),
             );
           }
         },
