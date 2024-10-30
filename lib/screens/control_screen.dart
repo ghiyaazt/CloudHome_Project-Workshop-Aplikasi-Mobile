@@ -2,78 +2,66 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'iot.dart';
 
-class MenuControl extends StatelessWidget {
+void main() {
+  runApp(cuaca());
+}
+
+class cuaca extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CloudHome',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HalamanUtama(),
+      debugShowCheckedModeBanner: false,
+      home: WeatherScreen(),
     );
   }
 }
 
-class HalamanUtama extends StatefulWidget {
-  @override
-  _HalamanUtamaState createState() => _HalamanUtamaState();
-}
-
-class _HalamanUtamaState extends State<HalamanUtama> {
-  int _indexTerpilih = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _indexTerpilih = index;
-    });
-  }
-
+class WeatherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-              'assets/images/logo1 2.png'), // Ganti dengan path gambar logo
-        ),
-        title: Image.asset('assets/images/cloudhome 2.png',
-            height: 40), // Ganti dengan path gambar yang diinginkan
+        backgroundColor: Colors.blue,
+        title: Text('CloudHome',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        centerTitle: true,
         actions: [
-          SizedBox(
-              width:
-                  48), // Tambahkan jarak kosong untuk memastikan teks tetap di tengah
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {},
+          ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Tambah Perangkat',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: Column(
+        children: [
+          Container(
+            color: Colors.blue,
+            padding: EdgeInsets.all(8),
+            child: Text(
+              'Kec. Sumbersari',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            _buildDeviceButton('CLOTHSLINE', 'assets/images/drying 2.png'),
-            _buildDeviceButton('TEMPERATUR DAN KELEMBABAN',
-                'assets/images/humidity (1) 1.png'),
-            _buildDeviceButton(
-                'KONTROL LED', 'assets/images/light-bulb (1) 1.png'),
-            SizedBox(height: 20),
-            Text(
-              'Notifikasi',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.blue[800],
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return WeatherCard(
+                    time: '${19 + index}.00',
+                    temperature: '${26 - index}° C',
+                    humidity: '${16 + index}%',
+                  );
+                },
+              ),
             ),
-            SizedBox(height: 10),
-            _buildNotificationCard(
-              'CLOTHSLINE',
-              'Hujan turun! Jemuran anda telah diamankan secara otomatis',
-              'assets/images/rain-sensor (1) 1.png',
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
@@ -93,59 +81,79 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             // Navigasi ke layar Cuaca
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MenuControl()),
+              MaterialPageRoute(builder: (context) => WeatherScreen()),
             );
           }
         },
         items: [
           BottomNavigationBarItem(
             icon: ImageIcon(
-                AssetImage('assets/images/iot 1.png')), // Gambar ikon untuk IoT
+              AssetImage('assets/images/iot 1.png'),
+            ), // Gambar ikon untuk IoT
             label: 'IoT',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage(
-                'assets/images/home (3) 1.png')), // Gambar ikon untuk Home
+            icon: ImageIcon(
+              AssetImage('assets/images/home (3) 1.png'),
+            ), // Gambar ikon untuk Home
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage(
-                'assets/images/snowing 2.png')), // Gambar ikon untuk Cuaca
+            icon: ImageIcon(
+              AssetImage('assets/images/snowing 2.png'),
+            ), // Gambar ikon untuk Cuaca
             label: 'Cuaca',
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildDeviceButton(String label, String imagePath) {
+class WeatherCard extends StatelessWidget {
+  final String time;
+  final String temperature;
+  final String humidity;
+
+  WeatherCard(
+      {required this.time, required this.temperature, required this.humidity});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 15),
-          backgroundColor: Colors.blue[700],
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.blue[700],
+        border: Border(
+          bottom: BorderSide(color: Colors.blue[900]!),
         ),
-        icon:
-            Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
-        label: Text(label, style: TextStyle(color: Colors.white)),
-        onPressed: () {
-          // Tambahkan fungsi sesuai kebutuhan
-        },
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(time, style: TextStyle(color: Colors.white, fontSize: 16)),
+          Row(
+            children: [
+              Icon(Icons.cloud, color: Colors.white, size: 20),
+              SizedBox(width: 8),
+              Text(temperature,
+                  style: TextStyle(color: Colors.white, fontSize: 16)),
+            ],
+          ),
+          Text(humidity, style: TextStyle(color: Colors.white, fontSize: 16)),
+        ],
       ),
     );
   }
+}
 
-  Widget _buildNotificationCard(
-      String title, String message, String imagePath) {
-    return Card(
-      color: Colors.grey[200],
-      child: ListTile(
-        leading: Image.asset(imagePath,
-            width: 40, height: 40), // Ganti Icon dengan Image.asset
-        title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(message),
-      ),
+// Dummy screen for IoT
+class IoTScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("IoT Screen")),
+      body: Center(child: Text("This is the IoT screen")),
     );
   }
 }
