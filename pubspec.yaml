@@ -11,6 +11,8 @@ dependencies:
   google_fonts: ^3.0.1  # untuk font kustom jika diperlukan
   font_awesome_flutter: ^10.3.0  # untuk ikon cuaca
   firebase_core: ^1.19.0
+  firebase_auth: ^4.7.2
+  
 
 # Ini digunakan untuk mengelola assets seperti gambar atau font
 flutter:
