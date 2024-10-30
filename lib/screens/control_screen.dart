@@ -81,7 +81,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             // Navigasi ke layar IoT
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => IotScreen()),
+              MaterialPageRoute(builder: (context) => iotscreen()),
             );
           } else if (index == 1) {
             // Navigasi ke layar Home
@@ -100,7 +100,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
         items: [
           BottomNavigationBarItem(
             icon: ImageIcon(
-                AssetImage('t/images/iot 1.png')), // Gambar ikon untuk IoT
+                AssetImage('assets/images/iot 1.png')), // Gambar ikon untuk IoT
             label: 'IoT',
           ),
           BottomNavigationBarItem(
