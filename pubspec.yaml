@@ -13,6 +13,9 @@ dependencies:
   firebase_core: ^2.14.0  
   firebase_auth: ^5.8.0
   
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
 # Ini digunakan untuk mengelola assets seperti gambar atau font
 flutter:
