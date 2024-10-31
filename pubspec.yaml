@@ -10,8 +10,8 @@ dependencies:
     sdk: flutter
   google_fonts: ^3.0.1  # untuk font kustom jika diperlukan
   font_awesome_flutter: ^10.3.0  # untuk ikon cuaca
-  firebase_core: ^2.14.0  
-  firebase_auth: ^5.8.0
+  firebase_core: ^2.4.0
+  firebase_auth: ^4.16.0
   
 dev_dependencies:
   flutter_test:
