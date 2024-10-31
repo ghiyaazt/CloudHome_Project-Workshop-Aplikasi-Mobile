@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class LayarRegister extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -17,19 +16,6 @@ class LayarRegister extends StatelessWidget {
         SnackBar(content: Text("Kata sandi tidak cocok")),
       );
       return;
-    }
-
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      if (userCredential.user != null) {
-        Navigator.pop(
-            context); // Kembali ke layar login setelah registrasi berhasil
-      }
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: ${e.message}")),
-      );
     }
   }
 
