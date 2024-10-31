@@ -40,6 +40,13 @@ android {
     }
 }
 
+dependencies {
+    implementation 'com.google.firebase:firebase-auth:22.1.1'  // Firebase Authentication SDK
+}
+
+
 flutter {
     source = "../.."
 }
+
+apply plugin: 'com.google.gms.google-services'  // Tambahkan ini di akhir file

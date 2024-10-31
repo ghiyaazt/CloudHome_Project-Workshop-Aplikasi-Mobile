@@ -1,6 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LayarRegister extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
+  Future<void> register(BuildContext context) async {
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+    String confirmPassword = confirmPasswordController.text.trim();
+
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Kata sandi tidak cocok")),
+      );
+      return;
+    }
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user != null) {
+        Navigator.pop(
+            context); // Kembali ke layar login setelah registrasi berhasil
+      }
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${e.message}")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +64,11 @@ class LayarRegister extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
 
-                  // Kolom Username
+                  // Kolom Email
                   TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
-                      labelText: "Nama Pengguna",
+                      labelText: "Email",
                       border: OutlineInputBorder(),
                       prefixIcon: ImageIcon(
                         AssetImage('assets/images/profile.png'),
@@ -47,6 +80,7 @@ class LayarRegister extends StatelessWidget {
 
                   // Kolom Password
                   TextField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: "Kata Sandi",
@@ -62,6 +96,7 @@ class LayarRegister extends StatelessWidget {
 
                   // Kolom Ulangi Password
                   TextField(
+                    controller: confirmPasswordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: "Ulangi Kata Sandi",
@@ -78,7 +113,7 @@ class LayarRegister extends StatelessWidget {
                   // Tombol Register
                   ElevatedButton(
                     onPressed: () {
-                      // Aksi registrasi pengguna
+                      register(context); // Panggil fungsi register
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 15),

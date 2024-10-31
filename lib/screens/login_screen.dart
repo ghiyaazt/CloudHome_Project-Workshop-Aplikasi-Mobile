@@ -1,8 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'home.dart';
-import 'register_screen.dart'; // Pastikan untuk mengimpor halaman register Anda
+import 'register_screen.dart';
 
 class LayarLogin extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  Future<void> signIn(BuildContext context) async {
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user != null) {
+        // Navigasi ke halaman cuaca setelah login sukses
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => CloudHomeApp()),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      // Tampilkan pesan error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${e.message}")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +44,6 @@ class LayarLogin extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Kontainer form login
             Container(
               padding: EdgeInsets.all(20),
               margin: EdgeInsets.symmetric(horizontal: 30),
@@ -28,22 +53,21 @@ class LayarLogin extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  // Gambar logo CuacaApp di dalam form login
                   Image.asset(
                     'assets/images/logo3 2.png', // Ganti dengan nama file gambar Anda
-                    width: 100, // Ukuran diperbesar
-                    height: 100, // Ukuran diperbesar
+                    width: 100,
+                    height: 100,
                   ),
-                  SizedBox(height: 10), // Jarak antara logo dan kolom username
+                  SizedBox(height: 10),
 
-                  // Kolom Username
+                  // Kolom Email
                   TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
-                      labelText: "Nama Pengguna",
+                      labelText: "Email",
                       border: OutlineInputBorder(),
                       prefixIcon: ImageIcon(
-                        AssetImage(
-                            'assets/images/profile.png'), // Gambar untuk Username
+                        AssetImage('assets/images/profile.png'),
                         color: Colors.black,
                       ),
                     ),
@@ -52,14 +76,15 @@ class LayarLogin extends StatelessWidget {
 
                   // Kolom Password
                   TextField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: "Kata Sandi",
                       border: OutlineInputBorder(),
                       prefixIcon: ImageIcon(
-                          AssetImage(
-                              'assets/images/padlock.png'), // Gambar untuk Password
-                          color: Colors.black),
+                        AssetImage('assets/images/padlock.png'),
+                        color: Colors.black,
+                      ),
                       suffixIcon: Icon(Icons.visibility_off),
                     ),
                   ),
@@ -68,11 +93,7 @@ class LayarLogin extends StatelessWidget {
                   // Tombol Masuk
                   ElevatedButton(
                     onPressed: () {
-                      // Navigasi ke halaman cuaca setelah login
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CloudHomeApp()),
-                      );
+                      signIn(context); // Panggil fungsi signIn
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 15),
@@ -93,7 +114,7 @@ class LayarLogin extends StatelessWidget {
                   // Tombol Kembali
                   TextButton(
                     onPressed: () {
-                      // Aksi ketika tombol kembali ditekan
+                      Navigator.pop(context);
                     },
                     child: Text(
                       "Kembali",
@@ -105,12 +126,11 @@ class LayarLogin extends StatelessWidget {
                   SizedBox(height: 10),
                   TextButton(
                     onPressed: () {
-                      // Navigasi ke halaman register
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                LayarRegister()), // Ganti dengan halaman register Anda
+                          builder: (context) => LayarRegister(),
+                        ),
                       );
                     },
                     child: Text(
