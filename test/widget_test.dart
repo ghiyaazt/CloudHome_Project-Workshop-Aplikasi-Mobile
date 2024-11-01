@@ -5,8 +5,7 @@ import 'package:cloudhome_application/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester
-        .pumpWidget(AplikasiCuaca()); // Pastikan `AplikasiCuaca` didefinisikan
+    await tester.pumpWidget(MyApp()); // Pastikan `AplikasiCuaca` didefinisikan
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

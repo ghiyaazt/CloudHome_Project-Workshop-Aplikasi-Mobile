@@ -1,136 +1,233 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
 
-class LayarRegister extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+class RegisterScreen extends StatefulWidget {
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
 
-  Future<void> register(BuildContext context) async {
-    String email = emailController.text.trim();
-    String password = passwordController.text.trim();
-    String confirmPassword = confirmPasswordController.text.trim();
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool _obscureTextPassword = true;
+  bool _obscureTextConfirmPassword = true;
 
-    if (password != confirmPassword) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Kata sandi tidak cocok")),
-      );
-      return;
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureTextPassword = !_obscureTextPassword;
+    });
+  }
+
+  void _toggleConfirmPasswordVisibility() {
+    setState(() {
+      _obscureTextConfirmPassword = !_obscureTextConfirmPassword;
+    });
+  }
+
+  Future<void> _register() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        // Create a new user with email and password
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _usernameController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+
+        // Navigate to home or login screen after successful registration
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Account registered successfully')),
+        );
+      } on FirebaseAuthException catch (e) {
+        // Handle registration errors
+        String message;
+        if (e.code == 'weak-password') {
+          message = 'The password provided is too weak.';
+        } else if (e.code == 'email-already-in-use') {
+          message = 'The account already exists for that email.';
+        } else {
+          message = 'An error occurred. Please try again.';
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message)),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue[300]!, Colors.blue[900]!],
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.all(20),
-              margin: EdgeInsets.symmetric(horizontal: 30),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+      backgroundColor: Colors.blue[700],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Background clouds
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.blue[700],
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(100)),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 50,
+                      left: 20,
+                      child: Icon(Icons.cloud, color: Colors.white, size: 100),
+                    ),
+                    Positioned(
+                      top: 70,
+                      right: 40,
+                      child: Icon(Icons.cloud, color: Colors.white, size: 120),
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
+              SizedBox(height: 20),
+              // Logo and title
+              Column(
                 children: [
-                  Image.asset(
-                    'assets/images/logo3 2.png', // Ganti dengan nama file gambar logo Anda
-                    width: 100,
-                    height: 100,
+                  Icon(
+                    Icons.home,
+                    size: 80,
+                    color: Colors.white,
                   ),
-                  SizedBox(height: 10),
-
-                  // Kolom Email
-                  TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      labelText: "Email",
-                      border: OutlineInputBorder(),
-                      prefixIcon: ImageIcon(
-                        AssetImage('assets/images/profile.png'),
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-
-                  // Kolom Password
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Kata Sandi",
-                      border: OutlineInputBorder(),
-                      prefixIcon: ImageIcon(
-                        AssetImage('assets/images/padlock.png'),
-                        color: Colors.black,
-                      ),
-                      suffixIcon: Icon(Icons.visibility_off),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-
-                  // Kolom Ulangi Password
-                  TextField(
-                    controller: confirmPasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Ulangi Kata Sandi",
-                      border: OutlineInputBorder(),
-                      prefixIcon: ImageIcon(
-                        AssetImage('assets/images/padlock.png'),
-                        color: Colors.black,
-                      ),
-                      suffixIcon: Icon(Icons.visibility_off),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-
-                  // Tombol Register
-                  ElevatedButton(
-                    onPressed: () {
-                      register(context); // Panggil fungsi register
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Daftar",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-
-                  // Tombol Kembali
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Kembali ke halaman sebelumnya
-                    },
-                    child: Text(
-                      "Kembali",
-                      style: TextStyle(color: Colors.blue),
+                  Text(
+                    'CloudHome',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              // Register form container
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                margin: EdgeInsets.symmetric(horizontal: 30),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your username';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 15),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: _obscureTextPassword,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureTextPassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: _togglePasswordVisibility,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          } else if (value.length < 6) {
+                            return 'Password must be at least 6 characters long';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 15),
+                      TextFormField(
+                        controller: _confirmPasswordController,
+                        obscureText: _obscureTextConfirmPassword,
+                        decoration: InputDecoration(
+                          labelText: 'Re-Password',
+                          border: OutlineInputBorder(),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureTextConfirmPassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: _toggleConfirmPasswordVisibility,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please confirm your password';
+                          } else if (value != _passwordController.text) {
+                            return 'Passwords do not match';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _register,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(double.infinity, 50),
+                          backgroundColor: Colors.blue[
+                              700], // Ganti 'primary' dengan 'backgroundColor'
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text('Sign Up'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              // Back to login link
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Kembali ke halaman login
+                },
+                child: Text(
+                  'Kembali',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );
