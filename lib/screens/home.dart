@@ -3,16 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'control_screen.dart';
 import 'iot.dart';
 
-class CloudHomeApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Beranda(),
-    );
-  }
-}
-
 class Beranda extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -161,7 +151,7 @@ class Beranda extends StatelessWidget {
             // Navigasi ke layar Home
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CloudHomeApp()),
+              MaterialPageRoute(builder: (context) => Beranda()),
             );
           } else if (index == 2) {
             // Navigasi ke layar Cuaca

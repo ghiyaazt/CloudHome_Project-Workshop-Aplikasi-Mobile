@@ -1,10 +1,11 @@
+import 'package:cloud_home/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'register_screen.dart';
 import 'home.dart';
 
 void main() {
-  runApp(loginpage());
+  runApp(MyApp());
 }
 
 class loginpage extends StatelessWidget {
@@ -14,7 +15,7 @@ class loginpage extends StatelessWidget {
       title: 'CloudHome',
       home: Beranda(),
       routes: {
-        '/home': (context) => CloudHomeApp(), // Ganti dengan halaman home Anda
+        '/home': (context) => Beranda(), // Ganti dengan halaman home Anda
       },
     );
   }
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // Navigate to the home screen after successful login
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => CloudHomeApp()),
+          MaterialPageRoute(builder: (context) => Beranda()),
         );
       } on FirebaseAuthException catch (e) {
         // Handle sign-in errors

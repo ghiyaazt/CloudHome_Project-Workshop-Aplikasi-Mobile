@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
+//import 'login_screen.dart';
+import 'home.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -47,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         // Navigate to home or login screen after successful registration
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => Beranda()),
         );
 
         ScaffoldMessenger.of(context).showSnackBar(

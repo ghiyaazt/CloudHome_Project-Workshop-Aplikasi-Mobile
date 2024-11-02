@@ -75,7 +75,7 @@ class WeatherScreen extends StatelessWidget {
             // Navigasi ke layar Home
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CloudHomeApp()),
+              MaterialPageRoute(builder: (context) => Beranda()),
             );
           } else if (index == 2) {
             // Navigasi ke layar Cuaca
