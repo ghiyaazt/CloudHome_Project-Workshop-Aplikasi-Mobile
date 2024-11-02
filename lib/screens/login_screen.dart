@@ -5,15 +5,21 @@ import 'register_screen.dart';
 import 'home.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    runApp(MaterialApp(
+      home: user == null ? LoginScreen() : Beranda(),
+    ));
+  });
 }
+
 
 class loginpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CloudHome',
-      home: Beranda(),
+      home: LoginScreen(),
       routes: {
         '/home': (context) => Beranda(), // Ganti dengan halaman home Anda
       },

@@ -1,13 +1,16 @@
+import 'package:cloud_home/screens/clothsline_menu.dart';
+import 'package:cloud_home/screens/suhudankelembapan.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'control_screen.dart';
+import 'clothsline_menu.dart';
 
 class iotscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CloudHome - IoT'),
+        title: Text(''),
         backgroundColor: Colors.blue,
       ),
       body: HalamanUtama(),
@@ -43,7 +46,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
         actions: [
           SizedBox(
               width:
-                  48), // Tambahkan jarak kosong untuk memastikan teks tetap di tengah
+              48), // Tambahkan jarak kosong untuk memastikan teks tetap di tengah
         ],
       ),
       body: Padding(
@@ -78,18 +81,13 @@ class _HalamanUtamaState extends State<HalamanUtama> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _indexTerpilih,
         onTap: (index) {
-          if (index == 0) {
+          if (index == 1) {
             // Navigasi ke layar IoT
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => iotscreen()),
-            );
-          } else if (index == 1) {
-            // Navigasi ke layar Home
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Beranda()),
             );
+
           } else if (index == 2) {
             // Navigasi ke layar Cuaca
             Navigator.push(
@@ -127,11 +125,18 @@ class _HalamanUtamaState extends State<HalamanUtama> {
           padding: EdgeInsets.symmetric(vertical: 15),
           backgroundColor: Colors.blue[700],
         ),
-        icon:
-            Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
+        icon: Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
         label: Text(label, style: TextStyle(color: Colors.white)),
         onPressed: () {
-          // Tambahkan fungsi sesuai kebutuhan
+          if (label == 'CLOTHSLINE') {
+            // Navigasi ke ControlScreen untuk CLOTHSLINE
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => suhudankelembaban()),
+            );
+          } else {
+            // Tambahkan navigasi atau aksi lain sesuai kebutuhan untuk perangkat lain
+          }
         },
       ),
     );

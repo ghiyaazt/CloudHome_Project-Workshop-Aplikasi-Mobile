@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cloudhome_application/main.dart';
+import 'package:cloud_home/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -14,6 +14,7 @@ void main() {
     // Find and tap the '+' icon and trigger a frame.
     final Finder incrementButton = find.byIcon(Icons.add);
     expect(incrementButton, findsOneWidget); // Memastikan tombol '+' ada
+
 
     await tester.tap(incrementButton);
     await tester.pump();

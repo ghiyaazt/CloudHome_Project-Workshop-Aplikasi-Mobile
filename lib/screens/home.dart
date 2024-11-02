@@ -44,14 +44,10 @@ class Beranda extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(FontAwesomeIcons.sun,
-                          size: 40, color: Colors.orange),
-                      Icon(FontAwesomeIcons.cloud,
-                          size: 40, color: Colors.grey),
-                      Icon(FontAwesomeIcons.cloudRain,
-                          size: 40, color: Colors.blue),
-                      Icon(FontAwesomeIcons.snowflake,
-                          size: 40, color: Colors.lightBlue),
+                      Icon(FontAwesomeIcons.sun, size: 40, color: Colors.orange),
+                      Icon(FontAwesomeIcons.cloud, size: 40, color: Colors.grey),
+                      Icon(FontAwesomeIcons.cloudRain, size: 40, color: Colors.blue),
+                      Icon(FontAwesomeIcons.snowflake, size: 40, color: Colors.lightBlue),
                     ],
                   ),
                 ],
@@ -115,23 +111,6 @@ class Beranda extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Tambahkan aksi tombol di sini
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        backgroundColor: Colors.blue,
-                      ),
-                      child: Text(
-                        'CLOTHSLINE',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -139,45 +118,53 @@ class Beranda extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          if (index == 0) {
-            // Navigasi ke layar IoT
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => iotscreen()),
-            );
-          } else if (index == 1) {
-            // Navigasi ke layar Home
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Beranda()),
-            );
-          } else if (index == 2) {
-            // Navigasi ke layar Cuaca
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => cuaca()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-                AssetImage('assets/images/iot 1.png')), // Gambar ikon untuk IoT
-            label: 'IoT',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage(
-                'assets/images/home (3) 1.png')), // Gambar ikon untuk Home
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage(
-                'assets/images/snowing 2.png')), // Gambar ikon untuk Cuaca
-            label: 'Cuaca',
-          ),
-        ],
+      // Custom Bottom Navigation Bar with Local Icons and Shadow
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // Set shadow position
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: Image.asset('assets/images/iot 1.png', height: 24),
+              onPressed: () {
+                // Navigate to IoT screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => IoTScreen()),
+                );
+              },
+            ),
+            IconButton(
+              icon: Image.asset('assets/images/home (3) 1.png', height: 24),
+              onPressed: () {
+                // Action for Home
+              },
+            ),
+            IconButton(
+              icon: Image.asset('assets/images/snowing 2.png', height: 24),
+              onPressed: () {
+                // Navigate to Weather screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => cuaca()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
