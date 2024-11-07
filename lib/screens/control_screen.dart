@@ -2,28 +2,15 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'iot.dart';
 
-void main() {
-  runApp(cuaca());
-}
 
 class cuaca extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: WeatherScreen(),
-    );
-  }
-}
-
-class WeatherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text('CloudHome',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
         centerTitle: true,
         actions: [
           IconButton(
@@ -63,42 +50,53 @@ class WeatherScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          if (index == 0) {
-            // Navigasi ke layar IoT
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => iotscreen()),
-            );
-          } else if (index == 1) {
-            // Navigasi ke layar Home
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Beranda()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/images/iot 1.png'),
-            ), // Gambar ikon untuk IoT
-            label: 'IoT',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/images/home (3) 1.png'),
-            ), // Gambar ikon untuk Home
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/images/snowing 2.png'),
-            ), // Gambar ikon untuk Cuaca
-            label: 'Cuaca',
-          ),
-        ],
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: Image.asset('assets/images/iot 1.png', height: 24), // Adjust image paths
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => iotscreen()),
+                );
+              },
+            ),
+            IconButton(
+              icon: Image.asset('assets/images/home (3) 1.png', height: 24),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Beranda()),
+                );
+              },
+            ),
+            IconButton(
+              icon: Image.asset('assets/images/snowing 2.png', height: 24),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => cuaca()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -137,17 +135,6 @@ class WeatherCard extends StatelessWidget {
           Text(humidity, style: TextStyle(color: Colors.white, fontSize: 16)),
         ],
       ),
-    );
-  }
-}
-
-// Dummy screen for IoT
-class IoTScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("IoT Screen")),
-      body: Center(child: Text("This is the IoT screen")),
     );
   }
 }

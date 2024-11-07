@@ -21,28 +21,45 @@ class _BerandaState extends State<Beranda> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CloudHome'),
-        backgroundColor: Colors.blue,
+        title: Text('CloudHome', style: TextStyle(fontSize: 24)),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset('assets/images/logo1 1.png'), // Add your logo image
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.menu, color: Colors.white),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Column(
           children: [
             Text(
               'Selamat Siang, User',
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
               ),
             ),
             SizedBox(height: 20),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.blue[100],
-                borderRadius: BorderRadius.circular(10),
+                gradient: LinearGradient(
+                  colors: [Colors.blue[400]!, Colors.blue[200]!],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     FontAwesomeIcons.cloudSun,
@@ -52,15 +69,19 @@ class _BerandaState extends State<Beranda> {
                   SizedBox(height: 10),
                   Text(
                     '17° C',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 48,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text('6%'),
-                      Text('90%'),
-                      Text('19 km/h'),
+                      Text('6%', style: TextStyle(color: Colors.white)),
+                      Text('90%', style: TextStyle(color: Colors.white)),
+                      Text('19 km/h', style: TextStyle(color: Colors.white)),
                     ],
                   ),
                 ],
@@ -72,21 +93,36 @@ class _BerandaState extends State<Beranda> {
               child: Container(
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: isClotheslineOn ? Colors.red : Colors.blue,
-                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Image.asset(
-                  'assets/images/power (1) 2.png', // Replace with your image asset path
-                  width: 60,  // Adjust as needed
-                  height: 60,
-                  color: Colors.white, // Optional: apply color tint if desired
+                child: Column(
+                  children: [
+                    Text(
+                      'CLOTHSLINE',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.blue[900],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: isClotheslineOn ? Colors.red : Colors.blue[900],
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/images/power (1) 2.png', // Path to your local icon image
+                        width: 50,  // Adjust width as needed
+                        height: 50, // Adjust height as needed
+                        color: Colors.white, // Apply color tint if desired
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'CLOTHSLINE',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -110,7 +146,7 @@ class _BerandaState extends State<Beranda> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: Image.asset('assets/images/iot 1.png', height: 24),
+              icon: Image.asset('assets/images/iot 1.png', height: 24), // Adjust image paths
               onPressed: () {
                 Navigator.push(
                   context,
@@ -136,6 +172,7 @@ class _BerandaState extends State<Beranda> {
           ],
         ),
       ),
+      backgroundColor: Colors.blue[800],
     );
   }
 }
