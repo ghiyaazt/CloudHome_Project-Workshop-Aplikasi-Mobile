@@ -1,4 +1,3 @@
-import 'package:cloud_home/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,13 +8,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Pastikan Firebase diinisialisasi
   FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    runApp(MaterialApp(
-      home: user == null ? LoginScreen() : Beranda(),
+    runApp(MyApp(isLoggedIn: user != null));
+  });
+}
+
+class MyApp extends StatelessWidget {
+  final bool isLoggedIn;
+
+  MyApp({required this.isLoggedIn});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: isLoggedIn ? Beranda() : LoginScreen(),
       routes: {
         '/home': (context) => Beranda(),
+        '/login': (context) => LoginScreen(),
       },
-    ));
-  });
+    );
+  }
 }
 
 class LoginScreen extends StatefulWidget {
@@ -49,13 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        // Gunakan addPostFrameCallback untuk memastikan konteks navigasi aman
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Beranda()),
-          );
-        });
+        Navigator.pushReplacementNamed(context, '/home'); // Navigasi ke home
       } on FirebaseAuthException catch (e) {
         String message;
         if (e.code == 'user-not-found') {
@@ -87,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: BoxDecoration(
                   color: Colors.blue[700],
                   borderRadius:
-                      BorderRadius.vertical(bottom: Radius.circular(100)),
+                  BorderRadius.vertical(bottom: Radius.circular(100)),
                 ),
                 child: Stack(
                   children: [

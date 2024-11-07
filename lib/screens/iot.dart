@@ -1,7 +1,7 @@
-import 'package:cloud_home/screens/clothsline_menu.dart';
 import 'package:cloud_home/screens/suhudankelembapan.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'clothsline_menu.dart';
 import 'control_screen.dart';
 
 class iotscreen extends StatelessWidget {
@@ -37,15 +37,11 @@ class _HalamanUtamaState extends State<HalamanUtama> {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-              'assets/images/logo1 2.png'), // Ganti dengan path gambar logo
+          child: Image.asset('assets/images/logo1 2.png'),
         ),
-        title: Image.asset('assets/images/cloudhome 2.png',
-            height: 40), // Ganti dengan path gambar yang diinginkan
+        title: Image.asset('assets/images/cloudhome 2.png', height: 40),
         actions: [
-          SizedBox(
-              width:
-                  48), // Tambahkan jarak kosong untuk memastikan teks tetap di tengah
+          SizedBox(width: 48),
         ],
       ),
       body: Padding(
@@ -81,13 +77,11 @@ class _HalamanUtamaState extends State<HalamanUtama> {
         currentIndex: _indexTerpilih,
         onTap: (index) {
           if (index == 1) {
-            // Navigasi ke layar IoT
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Beranda()),
             );
           } else if (index == 2) {
-            // Navigasi ke layar Cuaca
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => cuaca()),
@@ -96,18 +90,15 @@ class _HalamanUtamaState extends State<HalamanUtama> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: ImageIcon(
-                AssetImage('assets/images/iot 1.png')), // Gambar ikon untuk IoT
+            icon: ImageIcon(AssetImage('assets/images/iot 1.png')),
             label: 'IoT',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage(
-                'assets/images/home (3) 1.png')), // Gambar ikon untuk Home
+            icon: ImageIcon(AssetImage('assets/images/home (3) 1.png')),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage(
-                'assets/images/snowing 2.png')), // Gambar ikon untuk Cuaca
+            icon: ImageIcon(AssetImage('assets/images/snowing 2.png')),
             label: 'Cuaca',
           ),
         ],
@@ -123,18 +114,22 @@ class _HalamanUtamaState extends State<HalamanUtama> {
           padding: EdgeInsets.symmetric(vertical: 15),
           backgroundColor: Colors.blue[700],
         ),
-        icon:
-            Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
+        icon: Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
         label: Text(label, style: TextStyle(color: Colors.white)),
         onPressed: () {
           if (label == 'CLOTHSLINE') {
-            // Navigasi ke ControlScreen untuk CLOTHSLINE
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => menujemuran()),
+            );
+          } else if (label == 'TEMPERATUR DAN KELEMBABAN') {
+            // Navigasi ke suhu dan kelembapan
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => suhudankelembaban()),
             );
           } else {
-            // Tambahkan navigasi atau aksi lain sesuai kebutuhan untuk perangkat lain
+            // Tambahkan navigasi atau aksi lain sesuai kebutuhan
           }
         },
       ),
@@ -146,8 +141,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
     return Card(
       color: Colors.grey[200],
       child: ListTile(
-        leading: Image.asset(imagePath,
-            width: 40, height: 40), // Ganti Icon dengan Image.asset
+        leading: Image.asset(imagePath, width: 40, height: 40),
         title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(message),
       ),

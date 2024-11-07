@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'control_screen.dart';
+import 'iot.dart';
 
-class Beranda extends StatelessWidget {
+class Beranda extends StatefulWidget {
+  @override
+  _BerandaState createState() => _BerandaState();
+}
+
+class _BerandaState extends State<Beranda> {
+  bool isClotheslineOn = false;
+
+  void _toggleClothesline() {
+    setState(() {
+      isClotheslineOn = !isClotheslineOn;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,98 +44,53 @@ class Beranda extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text(
-                    'Cuaca Hari ini',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Icon(
+                    FontAwesomeIcons.cloudSun,
+                    size: 60,
+                    color: Colors.orange,
                   ),
                   SizedBox(height: 10),
                   Text(
-                    '24 September 2024',
-                    style: TextStyle(fontSize: 16),
+                    '17° C',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(FontAwesomeIcons.sun,
-                          size: 40, color: Colors.orange),
-                      Icon(FontAwesomeIcons.cloud,
-                          size: 40, color: Colors.grey),
-                      Icon(FontAwesomeIcons.cloudRain,
-                          size: 40, color: Colors.blue),
-                      Icon(FontAwesomeIcons.snowflake,
-                          size: 40, color: Colors.lightBlue),
+                      Text('6%'),
+                      Text('90%'),
+                      Text('19 km/h'),
                     ],
                   ),
                 ],
               ),
             ),
             SizedBox(height: 20),
-            Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    'Informasi Tambahan',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Ini adalah kotak putih untuk informasi tambahan.',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _infoCard('Suhu', '-'),
-                _infoCard('Kelembaban', '-'),
-              ],
-            ),
-            SizedBox(height: 30),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.blue,
-                      ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/images/power (1) 2.png',
-                          height: 150,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                  ],
+            GestureDetector(
+              onTap: _toggleClothesline,
+              child: Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: isClotheslineOn ? Colors.red : Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+                child: Image.asset(
+                  'assets/images/power (1) 2.png', // Replace with your image asset path
+                  width: 60,  // Adjust as needed
+                  height: 60,
+                  color: Colors.white, // Optional: apply color tint if desired
                 ),
               ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'CLOTHSLINE',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
         ),
       ),
-      // Custom Bottom Navigation Bar with Local Icons and Shadow
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(16),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -133,7 +102,7 @@ class Beranda extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: Offset(0, 3), // Set shadow position
+              offset: Offset(0, 3),
             ),
           ],
         ),
@@ -143,23 +112,21 @@ class Beranda extends StatelessWidget {
             IconButton(
               icon: Image.asset('assets/images/iot 1.png', height: 24),
               onPressed: () {
-                // Navigate to IoT screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => IoTScreen()),
+                  MaterialPageRoute(builder: (context) => iotscreen()),
                 );
               },
             ),
             IconButton(
               icon: Image.asset('assets/images/home (3) 1.png', height: 24),
               onPressed: () {
-                // Action for Home
+                // Home action
               },
             ),
             IconButton(
               icon: Image.asset('assets/images/snowing 2.png', height: 24),
               onPressed: () {
-                // Navigate to Weather screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => cuaca()),
@@ -168,29 +135,6 @@ class Beranda extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _infoCard(String title, String value) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.blue[50],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          Text(
-            value,
-            style: TextStyle(fontSize: 24),
-          ),
-        ],
       ),
     );
   }

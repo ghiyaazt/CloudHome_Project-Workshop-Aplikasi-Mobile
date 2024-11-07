@@ -1,4 +1,4 @@
-import 'package:cloud_home/screens/login_screen.dart';
+import 'package:cloud_home/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: Beranda(),
     );
   }
 }
