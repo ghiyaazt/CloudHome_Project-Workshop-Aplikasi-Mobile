@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'control_screen.dart';
-import 'iot.dart';
 
 class Beranda extends StatelessWidget {
   @override
@@ -44,10 +43,14 @@ class Beranda extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(FontAwesomeIcons.sun, size: 40, color: Colors.orange),
-                      Icon(FontAwesomeIcons.cloud, size: 40, color: Colors.grey),
-                      Icon(FontAwesomeIcons.cloudRain, size: 40, color: Colors.blue),
-                      Icon(FontAwesomeIcons.snowflake, size: 40, color: Colors.lightBlue),
+                      Icon(FontAwesomeIcons.sun,
+                          size: 40, color: Colors.orange),
+                      Icon(FontAwesomeIcons.cloud,
+                          size: 40, color: Colors.grey),
+                      Icon(FontAwesomeIcons.cloudRain,
+                          size: 40, color: Colors.blue),
+                      Icon(FontAwesomeIcons.snowflake,
+                          size: 40, color: Colors.lightBlue),
                     ],
                   ),
                 ],

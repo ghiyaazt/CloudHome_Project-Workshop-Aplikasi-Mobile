@@ -1,30 +1,21 @@
 import 'package:cloud_home/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'register_screen.dart';
 import 'home.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Pastikan Firebase diinisialisasi
   FirebaseAuth.instance.authStateChanges().listen((User? user) {
     runApp(MaterialApp(
       home: user == null ? LoginScreen() : Beranda(),
+      routes: {
+        '/home': (context) => Beranda(),
+      },
     ));
   });
-}
-
-
-class loginpage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'CloudHome',
-      home: LoginScreen(),
-      routes: {
-        '/home': (context) => Beranda(), // Ganti dengan halaman home Anda
-      },
-    );
-  }
 }
 
 class LoginScreen extends StatefulWidget {
@@ -58,13 +49,14 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        // Navigate to the home screen after successful login
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Beranda()),
-        );
+        // Gunakan addPostFrameCallback untuk memastikan konteks navigasi aman
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Beranda()),
+          );
+        });
       } on FirebaseAuthException catch (e) {
-        // Handle sign-in errors
         String message;
         if (e.code == 'user-not-found') {
           message = 'No user found with this email.';
@@ -147,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                          labelText: 'Username',
+                          labelText: 'Email',
                           border: OutlineInputBorder(),
                         ),
                         validator: (value) {
@@ -185,8 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: _signInWithEmailAndPassword,
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size(double.infinity, 50),
-                          backgroundColor: Colors.blue[
-                              700], // Ubah dari 'primary' ke 'backgroundColor'
+                          backgroundColor: Colors.blue[700],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -205,7 +196,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     context,
                     MaterialPageRoute(builder: (context) => RegisterScreen()),
                   );
-                  // Tambahkan aksi untuk pindah ke halaman daftar
                 },
                 child: Text(
                   'Belum daftar? Daftar',
@@ -221,8 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-// Placeholder for the home screen
-class HomeScreen extends StatelessWidget {
+class Beranda extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

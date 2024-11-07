@@ -3,7 +3,6 @@ import 'package:cloud_home/screens/suhudankelembapan.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'control_screen.dart';
-import 'clothsline_menu.dart';
 
 class iotscreen extends StatelessWidget {
   @override
@@ -46,7 +45,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
         actions: [
           SizedBox(
               width:
-              48), // Tambahkan jarak kosong untuk memastikan teks tetap di tengah
+                  48), // Tambahkan jarak kosong untuk memastikan teks tetap di tengah
         ],
       ),
       body: Padding(
@@ -87,7 +86,6 @@ class _HalamanUtamaState extends State<HalamanUtama> {
               context,
               MaterialPageRoute(builder: (context) => Beranda()),
             );
-
           } else if (index == 2) {
             // Navigasi ke layar Cuaca
             Navigator.push(
@@ -125,7 +123,8 @@ class _HalamanUtamaState extends State<HalamanUtama> {
           padding: EdgeInsets.symmetric(vertical: 15),
           backgroundColor: Colors.blue[700],
         ),
-        icon: Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
+        icon:
+            Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
         label: Text(label, style: TextStyle(color: Colors.white)),
         onPressed: () {
           if (label == 'CLOTHSLINE') {
