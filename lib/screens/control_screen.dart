@@ -1,16 +1,57 @@
+import 'package:cloud_home/screens/home.dart';
+import 'package:cloud_home/screens/iot.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
-import 'iot.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+class cuaca extends StatefulWidget {
+  @override
+  _CuacaState createState() => _CuacaState();
+}
 
-class cuaca extends StatelessWidget {
+class _CuacaState extends State<cuaca> {
+  String _city = 'Jember';
+  double? _temperature;
+  int? _humidity;
+  String? _weatherDescription;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchWeather();
+  }
+
+  Future<void> _fetchWeather() async {
+    const apiKey = 'YOUR_OPENWEATHER_API_KEY';
+    final url = Uri.parse(
+        'https://api.openweathermap.org/data/2.5/weather?q=$_city&units=metric&appid=$apiKey');
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      setState(() {
+        _temperature = data['main']['temp'];
+        _humidity = data['main']['humidity'];
+        _weatherDescription = data['weather'][0]['description'];
+      });
+    } else {
+      setState(() {
+        _weatherDescription = "Failed to load weather data";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text('CloudHome',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+        title: Text(
+          'CloudHome',
+          style: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -25,7 +66,7 @@ class cuaca extends StatelessWidget {
             color: Colors.blue,
             padding: EdgeInsets.all(8),
             child: Text(
-              'Kec. Sumbersari',
+              'Kec. Sumbersari, $_city',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -35,17 +76,16 @@ class cuaca extends StatelessWidget {
           Expanded(
             child: Container(
               color: Colors.blue[800],
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return WeatherCard(
-                    time: '${19 + index}.00',
-                    temperature: '${26 - index}° C',
-                    humidity: '${16 + index}%',
-                  );
-                },
-              ),
+              child: _temperature != null && _humidity != null
+                  ? WeatherCard(
+                      time: 'Current',
+                      temperature: '${_temperature!.toStringAsFixed(1)}° C',
+                      humidity: '$_humidity%',
+                      description: _weatherDescription!,
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    ),
             ),
           ),
         ],
@@ -69,11 +109,13 @@ class cuaca extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: Image.asset('assets/images/iot 1.png', height: 24), // Adjust image paths
+              icon: Image.asset('assets/images/iot 1.png', height: 24),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => iotscreen()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          iotscreen()), // Update the target screen class
                 );
               },
             ),
@@ -82,7 +124,9 @@ class cuaca extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Beranda()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Beranda()), // Update the target screen class
                 );
               },
             ),
@@ -106,9 +150,14 @@ class WeatherCard extends StatelessWidget {
   final String time;
   final String temperature;
   final String humidity;
+  final String description;
 
-  WeatherCard(
-      {required this.time, required this.temperature, required this.humidity});
+  WeatherCard({
+    required this.time,
+    required this.temperature,
+    required this.humidity,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -120,10 +169,11 @@ class WeatherCard extends StatelessWidget {
           bottom: BorderSide(color: Colors.blue[900]!),
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(time, style: TextStyle(color: Colors.white, fontSize: 16)),
+          SizedBox(height: 4),
           Row(
             children: [
               Icon(Icons.cloud, color: Colors.white, size: 20),
@@ -132,9 +182,32 @@ class WeatherCard extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 16)),
             ],
           ),
-          Text(humidity, style: TextStyle(color: Colors.white, fontSize: 16)),
+          Text('Humidity: $humidity',
+              style: TextStyle(color: Colors.white, fontSize: 16)),
+          Text('Description: $description',
+              style: TextStyle(color: Colors.white, fontSize: 16)),
         ],
       ),
+    );
+  }
+}
+
+class IoTScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("IoT Screen")),
+      body: Center(child: Text("IoT Screen")),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Home Screen")),
+      body: Center(child: Text("Home Screen")),
     );
   }
 }
