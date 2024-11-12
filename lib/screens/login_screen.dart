@@ -1,33 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'register_screen.dart';
 import 'home.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Pastikan Firebase diinisialisasi
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    runApp(MyApp(isLoggedIn: user != null));
-  });
-}
-
-class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-
-  MyApp({required this.isLoggedIn});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: isLoggedIn ? Beranda() : LoginScreen(),
-      routes: {
-        '/home': (context) => Beranda(),
-        '/login': (context) => LoginScreen(),
-      },
-    );
-  }
-}
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -60,7 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        Navigator.pushReplacementNamed(context, '/home'); // Navigasi ke home
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Beranda()), // Arahkan ke home.dart setelah login
+        );
       } on FirebaseAuthException catch (e) {
         String message;
         if (e.code == 'user-not-found') {
@@ -86,13 +65,12 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Background clouds
               Container(
                 height: 200,
                 decoration: BoxDecoration(
                   color: Colors.blue[700],
                   borderRadius:
-                  BorderRadius.vertical(bottom: Radius.circular(100)),
+                      BorderRadius.vertical(bottom: Radius.circular(100)),
                 ),
                 child: Stack(
                   children: [
@@ -110,7 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              // Logo and title
               Column(
                 children: [
                   Icon(
@@ -129,7 +106,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               SizedBox(height: 20),
-              // Login form container
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 margin: EdgeInsets.symmetric(horizontal: 30),
@@ -194,7 +170,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              // Register link
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -212,16 +187,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class Beranda extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Home')),
-      body: Center(child: Text('Welcome to CloudHome!')),
     );
   }
 }
