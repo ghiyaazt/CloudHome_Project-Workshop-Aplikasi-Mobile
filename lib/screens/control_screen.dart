@@ -1,8 +1,9 @@
-import 'package:cloud_home/screens/home.dart';
-import 'package:cloud_home/screens/iot.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async'; // Import untuk Timer
+import 'home.dart';
+import 'iot.dart';
 
 class cuaca extends StatefulWidget {
   @override
@@ -11,35 +12,56 @@ class cuaca extends StatefulWidget {
 
 class _CuacaState extends State<cuaca> {
   String _city = 'Jember';
-  double? _temperature;
-  int? _humidity;
-  String? _weatherDescription;
+  List<Map<String, dynamic>> _forecast = [];
+  Timer? _timer; // Timer untuk update data
 
   @override
   void initState() {
     super.initState();
     _fetchWeather();
+    _startTimer();
   }
 
+  // Fungsi untuk memulai timer yang akan memperbarui data setiap 1 jam
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(hours: 1), (timer) {
+      _fetchWeather();
+    });
+  }
+
+  // Fungsi untuk mengambil data cuaca dari API
   Future<void> _fetchWeather() async {
-    const apiKey = 'YOUR_OPENWEATHER_API_KEY';
+    const apiKey = '791dc787731644ce486fc4fe66969735';
     final url = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?q=$_city&units=metric&appid=$apiKey');
+        'https://api.openweathermap.org/data/2.5/forecast?q=Jember&units=metric&appid=$apiKey');
 
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       setState(() {
-        _temperature = data['main']['temp'];
-        _humidity = data['main']['humidity'];
-        _weatherDescription = data['weather'][0]['description'];
+        _forecast = List.generate(8, (index) {
+          final forecastData = data['list'][index];
+          final dateTime = DateTime.parse(forecastData['dt_txt']);
+          return {
+            "time": "${dateTime.hour.toString().padLeft(2, '0')}:00",
+            "temperature": forecastData['main']['temp'].toString(),
+            "humidity": forecastData['main']['humidity'].toString(),
+            "icon": forecastData['weather'][0]['icon']
+          };
+        });
       });
     } else {
       setState(() {
-        _weatherDescription = "Failed to load weather data";
+        _forecast = [];
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Pastikan timer dihentikan saat widget dihancurkan
+    super.dispose();
   }
 
   @override
@@ -65,23 +87,41 @@ class _CuacaState extends State<cuaca> {
           Container(
             color: Colors.blue,
             padding: EdgeInsets.all(8),
-            child: Text(
-              'Kec. Sumbersari, $_city',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+            child: Column(
+              children: [
+                Text(
+                  'Kec. Sumbersari, $_city',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Wednesday',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal),
+                ),
+              ],
             ),
           ),
           Expanded(
             child: Container(
               color: Colors.blue[800],
-              child: _temperature != null && _humidity != null
-                  ? WeatherCard(
-                      time: 'Current',
-                      temperature: '${_temperature!.toStringAsFixed(1)}° C',
-                      humidity: '$_humidity%',
-                      description: _weatherDescription!,
+              child: _forecast.isNotEmpty
+                  ? ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: _forecast.length,
+                      itemBuilder: (context, index) {
+                        final item = _forecast[index];
+                        return WeatherCard(
+                          time: item['time'],
+                          temperature: '${item['temperature']}° C',
+                          humidity: '${item['humidity']}%',
+                          icon: item['icon'],
+                        );
+                      },
                     )
                   : Center(
                       child: CircularProgressIndicator(),
@@ -113,9 +153,7 @@ class _CuacaState extends State<cuaca> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          iotscreen()), // Update the target screen class
+                  MaterialPageRoute(builder: (context) => iotscreen()),
                 );
               },
             ),
@@ -124,9 +162,7 @@ class _CuacaState extends State<cuaca> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Beranda()), // Update the target screen class
+                  MaterialPageRoute(builder: (context) => Beranda()),
                 );
               },
             ),
@@ -150,13 +186,13 @@ class WeatherCard extends StatelessWidget {
   final String time;
   final String temperature;
   final String humidity;
-  final String description;
+  final String icon;
 
   WeatherCard({
     required this.time,
     required this.temperature,
     required this.humidity,
-    required this.description,
+    required this.icon,
   });
 
   @override
@@ -169,45 +205,25 @@ class WeatherCard extends StatelessWidget {
           bottom: BorderSide(color: Colors.blue[900]!),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(time, style: TextStyle(color: Colors.white, fontSize: 16)),
-          SizedBox(height: 4),
           Row(
             children: [
-              Icon(Icons.cloud, color: Colors.white, size: 20),
+              Image.network(
+                'http://openweathermap.org/img/wn/$icon@2x.png',
+                width: 24,
+                height: 24,
+              ),
               SizedBox(width: 8),
               Text(temperature,
                   style: TextStyle(color: Colors.white, fontSize: 16)),
             ],
           ),
-          Text('Humidity: $humidity',
-              style: TextStyle(color: Colors.white, fontSize: 16)),
-          Text('Description: $description',
-              style: TextStyle(color: Colors.white, fontSize: 16)),
+          Text(humidity, style: TextStyle(color: Colors.white, fontSize: 16)),
         ],
       ),
-    );
-  }
-}
-
-class IoTScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("IoT Screen")),
-      body: Center(child: Text("IoT Screen")),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Home Screen")),
-      body: Center(child: Text("Home Screen")),
     );
   }
 }
