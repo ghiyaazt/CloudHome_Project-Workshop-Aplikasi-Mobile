@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async'; // Import untuk Timer
+import 'dart:async';
 import 'home.dart';
 import 'iot.dart';
 
@@ -13,7 +13,7 @@ class cuaca extends StatefulWidget {
 class _CuacaState extends State<cuaca> {
   String _city = 'Jember';
   List<Map<String, dynamic>> _forecast = [];
-  Timer? _timer; // Timer untuk update data
+  Timer? _timer;
 
   @override
   void initState() {
@@ -22,18 +22,16 @@ class _CuacaState extends State<cuaca> {
     _startTimer();
   }
 
-  // Fungsi untuk memulai timer yang akan memperbarui data setiap 1 jam
   void _startTimer() {
     _timer = Timer.periodic(Duration(hours: 1), (timer) {
       _fetchWeather();
     });
   }
 
-  // Fungsi untuk mengambil data cuaca dari API
   Future<void> _fetchWeather() async {
     const apiKey = '791dc787731644ce486fc4fe66969735';
     final url = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/forecast?q=Jember&units=metric&appid=$apiKey');
+        'https://api.openweathermap.org/data/2.5/forecast?q=Jember&units=metric&appid=791dc787731644ce486fc4fe66969735');
 
     final response = await http.get(url);
 
@@ -60,7 +58,7 @@ class _CuacaState extends State<cuaca> {
 
   @override
   void dispose() {
-    _timer?.cancel(); // Pastikan timer dihentikan saat widget dihancurkan
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -111,21 +109,21 @@ class _CuacaState extends State<cuaca> {
               color: Colors.blue[800],
               child: _forecast.isNotEmpty
                   ? ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: _forecast.length,
-                      itemBuilder: (context, index) {
-                        final item = _forecast[index];
-                        return WeatherCard(
-                          time: item['time'],
-                          temperature: '${item['temperature']}° C',
-                          humidity: '${item['humidity']}%',
-                          icon: item['icon'],
-                        );
-                      },
-                    )
+                padding: EdgeInsets.zero,
+                itemCount: _forecast.length,
+                itemBuilder: (context, index) {
+                  final item = _forecast[index];
+                  return WeatherCard(
+                    time: item['time'],
+                    temperature: '${item['temperature']}° C',
+                    humidity: '${item['humidity']}%',
+                    icon: item['icon'],
+                  );
+                },
+              )
                   : Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                child: CircularProgressIndicator(),
+              ),
             ),
           ),
         ],
@@ -208,7 +206,13 @@ class WeatherCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(time, style: TextStyle(color: Colors.white, fontSize: 16)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Jam:", style: TextStyle(color: Colors.white70, fontSize: 14)),
+              Text(time, style: TextStyle(color: Colors.white, fontSize: 16)),
+            ],
+          ),
           Row(
             children: [
               Image.network(
@@ -217,11 +221,22 @@ class WeatherCard extends StatelessWidget {
                 height: 24,
               ),
               SizedBox(width: 8),
-              Text(temperature,
-                  style: TextStyle(color: Colors.white, fontSize: 16)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Suhu:", style: TextStyle(color: Colors.white70, fontSize: 14)),
+                  Text(temperature, style: TextStyle(color: Colors.white, fontSize: 16)),
+                ],
+              ),
             ],
           ),
-          Text(humidity, style: TextStyle(color: Colors.white, fontSize: 16)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Kelembaban:", style: TextStyle(color: Colors.white70, fontSize: 14)),
+              Text(humidity, style: TextStyle(color: Colors.white, fontSize: 16)),
+            ],
+          ),
         ],
       ),
     );
