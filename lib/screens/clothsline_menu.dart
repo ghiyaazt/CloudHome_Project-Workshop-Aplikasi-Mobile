@@ -48,13 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-                'assets/images/logo1 1.png',
-                color: Colors.white,
-                width: 30,
-                height: 30
-            ),c./-
-
+            Image.asset('assets/images/logo1 1.png',
+                color: Colors.white, width: 30, height: 30),
             SizedBox(width: 8),
             Text(
               'CloudHome',
@@ -185,7 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-
     );
   }
 }
