@@ -15,6 +15,7 @@ dependencies:
   cloud_firestore: 4.17.5
   fl_chart: ^0.65.0
   http: ^0.13.5
+  mqtt_client: ^9.6.1
   
 dev_dependencies:
   flutter_test:
