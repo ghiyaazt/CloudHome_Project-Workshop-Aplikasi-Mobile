@@ -1,6 +1,9 @@
+import 'package:cloud_home/screens/control_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:cloud_home/screens/iot.dart';
+import 'package:cloud_home/screens/home.dart';
 
 void main() {
   runApp(menujemuran());
@@ -10,6 +13,7 @@ class menujemuran extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'CloudHome',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -86,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white,
                 width: 30,
                 height: 30
-            ),c./-
+            ),
 
             SizedBox(width: 8),
             Text(
@@ -143,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   child: Text(
-                    'Kembalikan Keperawanan',
+                    'KEMBALIKAN ATAP',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -177,18 +181,30 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Image.asset('assets/images/iot 1.png', height: 24),
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => iotscreen()),
+                );
                 // Navigator logic remains unchanged
               },
             ),
             IconButton(
               icon: Image.asset('assets/images/home (3) 1.png', height: 24),
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Beranda()),
+                );
                 // Navigator logic remains unchanged
               },
             ),
             IconButton(
               icon: Image.asset('assets/images/snowing 2.png', height: 24),
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => cuaca()),
+                );
                 // Navigator logic remains unchanged
               },
             ),
