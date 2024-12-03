@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'control_screen.dart';
-import 'iot.dart';
+import 'clothsline_menu.dart';
 
 class Beranda extends StatefulWidget {
   @override
@@ -12,7 +12,6 @@ class Beranda extends StatefulWidget {
 }
 
 class _BerandaState extends State<Beranda> {
-  bool isClotheslineOn = false;
   double? temperature;
   int? humidity;
   double? windSpeed;
@@ -25,7 +24,6 @@ class _BerandaState extends State<Beranda> {
     _startWeatherUpdate();
   }
 
-  // Update the weather every 10 seconds (for demonstration purposes)
   void _startWeatherUpdate() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       _fetchWeather();
@@ -51,16 +49,22 @@ class _BerandaState extends State<Beranda> {
     }
   }
 
-  void _toggleClothesline() {
-    setState(() {
-      isClotheslineOn = !isClotheslineOn;
-    });
-  }
-
   @override
   void dispose() {
     _timer?.cancel();
     super.dispose();
+  }
+
+  Widget _buildNotificationCard(
+      String title, String message, String imagePath) {
+    return Card(
+      color: Colors.grey[200],
+      child: ListTile(
+        leading: Image.asset(imagePath, width: 40, height: 40),
+        title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(message),
+      ),
+    );
   }
 
   @override
@@ -125,48 +129,40 @@ class _BerandaState extends State<Beranda> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text('${humidity ?? "--"}%', style: TextStyle(color: Colors.white)),
-                      Text('${windSpeed?.toStringAsFixed(1) ?? "--"} km/h', style: TextStyle(color: Colors.white)),
+                      Text('${humidity ?? "--"}%',
+                          style: TextStyle(color: Colors.white)),
+                      Text('${windSpeed?.toStringAsFixed(1) ?? "--"} km/h',
+                          style: TextStyle(color: Colors.white)),
                     ],
                   ),
                 ],
               ),
             ),
             SizedBox(height: 20),
-            GestureDetector(
-              onTap: _toggleClothesline,
-              child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'CLOTHSLINE',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.blue[900],
-                        fontWeight: FontWeight.bold,
-                      ),
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'NOTIFIKASI',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.blue[900],
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: isClotheslineOn ? Colors.red : Colors.blue[900],
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.asset(
-                        'assets/images/power (1) 2.png',
-                        width: 50,
-                        height: 50,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 10),
+                  _buildNotificationCard(
+                    'CLOTHSLINE',
+                    'Hujan turun! Jemuran anda telah diamankan secara otomatis',
+                    'assets/images/rain-sensor (1) 1.png',
+                  ),
+                  // Tambahkan notifikasi lainnya jika diperlukan
+                ],
               ),
             ),
           ],
@@ -195,7 +191,7 @@ class _BerandaState extends State<Beranda> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => iotscreen()),
+                  MaterialPageRoute(builder: (context) => menujemuran()),
                 );
               },
             ),
