@@ -2,7 +2,6 @@ import 'package:cloud_home/screens/control_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-import 'package:cloud_home/screens/iot.dart';
 import 'package:cloud_home/screens/home.dart';
 
 void main() {
@@ -181,10 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Image.asset('assets/images/iot 1.png', height: 24),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => iotscreen()),
-                );
                 // Navigator logic remains unchanged
               },
             ),

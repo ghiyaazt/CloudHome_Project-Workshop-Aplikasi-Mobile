@@ -15,7 +15,8 @@ class iotscreen extends StatelessWidget {
           children: [
             Image.asset('assets/images/logo1 2.png', height: 40),
             SizedBox(width: 10),
-            Text('CloudHome', style: TextStyle(fontSize: 24, color: Colors.black)),
+            Text('CloudHome',
+                style: TextStyle(fontSize: 24, color: Colors.black)),
           ],
         ),
         actions: [SizedBox(width: 48)],
@@ -31,12 +32,8 @@ class HalamanUtama extends StatefulWidget {
 }
 
 class _HalamanUtamaState extends State<HalamanUtama> {
-  int _selectedIndex = 0;
-
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(() {});
 
     // Navigate to the corresponding page based on index
     if (index == 1) {
@@ -66,8 +63,10 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             ),
             SizedBox(height: 10),
             _buildDeviceButton('CLOTHSLINE', 'assets/images/drying 2.png'),
-            _buildDeviceButton('TEMPERATURE AND HUMIDITY', 'assets/images/humidity (1) 1.png'),
-            _buildDeviceButton('LED CONTROL', 'assets/images/light-bulb (1) 1.png'),
+            _buildDeviceButton(
+                'TEMPERATURE AND HUMIDITY', 'assets/images/humidity (1) 1.png'),
+            _buildDeviceButton(
+                'LED CONTROL', 'assets/images/light-bulb (1) 1.png'),
             SizedBox(height: 20),
             Text(
               'Notification',
@@ -145,7 +144,8 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        icon: Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
+        icon:
+            Image.asset(imagePath, width: 24, height: 24, color: Colors.white),
         label: Text(label, style: TextStyle(color: Colors.white)),
         onPressed: () {
           if (label == 'CLOTHSLINE') {
@@ -164,7 +164,8 @@ class _HalamanUtamaState extends State<HalamanUtama> {
     );
   }
 
-  Widget _buildNotificationCard(String title, String message, String imagePath) {
+  Widget _buildNotificationCard(
+      String title, String message, String imagePath) {
     return Card(
       color: Colors.grey[200],
       child: ListTile(

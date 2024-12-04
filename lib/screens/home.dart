@@ -31,7 +31,6 @@ class _BerandaState extends State<Beranda> {
   }
 
   Future<void> _fetchWeather() async {
-    const apiKey = '791dc787731644ce486fc4fe66969735';
     final url = Uri.parse(
         'https://api.openweathermap.org/data/2.5/weather?q=Jember&units=metric&appid=791dc787731644ce486fc4fe66969735');
 
