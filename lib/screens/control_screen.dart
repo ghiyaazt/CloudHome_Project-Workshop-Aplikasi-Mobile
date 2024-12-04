@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'home.dart';
-import 'iot.dart';
+import 'clothsline_menu.dart';
 
 class cuaca extends StatefulWidget {
   @override
@@ -108,21 +108,21 @@ class _CuacaState extends State<cuaca> {
               color: Colors.blue[800],
               child: _forecast.isNotEmpty
                   ? ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: _forecast.length,
-                itemBuilder: (context, index) {
-                  final item = _forecast[index];
-                  return WeatherCard(
-                    time: item['time'],
-                    temperature: '${item['temperature']}° C',
-                    humidity: '${item['humidity']}%',
-                    icon: item['icon'],
-                  );
-                },
-              )
+                      padding: EdgeInsets.zero,
+                      itemCount: _forecast.length,
+                      itemBuilder: (context, index) {
+                        final item = _forecast[index];
+                        return WeatherCard(
+                          time: item['time'],
+                          temperature: '${item['temperature']}° C',
+                          humidity: '${item['humidity']}%',
+                          icon: item['icon'],
+                        );
+                      },
+                    )
                   : Center(
-                child: CircularProgressIndicator(),
-              ),
+                      child: CircularProgressIndicator(),
+                    ),
             ),
           ),
         ],
@@ -150,7 +150,7 @@ class _CuacaState extends State<cuaca> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => iotscreen()),
+                  MaterialPageRoute(builder: (context) => menujemuran()),
                 );
               },
             ),
@@ -165,12 +165,7 @@ class _CuacaState extends State<cuaca> {
             ),
             IconButton(
               icon: Image.asset('assets/images/snowing 2.png', height: 24),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => cuaca()),
-                );
-              },
+              onPressed: () {},
             ),
           ],
         ),
@@ -208,7 +203,8 @@ class WeatherCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Jam:", style: TextStyle(color: Colors.white70, fontSize: 14)),
+              Text("Jam:",
+                  style: TextStyle(color: Colors.white70, fontSize: 14)),
               Text(time, style: TextStyle(color: Colors.white, fontSize: 16)),
             ],
           ),
@@ -223,8 +219,10 @@ class WeatherCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Suhu:", style: TextStyle(color: Colors.white70, fontSize: 14)),
-                  Text(temperature, style: TextStyle(color: Colors.white, fontSize: 16)),
+                  Text("Suhu:",
+                      style: TextStyle(color: Colors.white70, fontSize: 14)),
+                  Text(temperature,
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
                 ],
               ),
             ],
@@ -232,8 +230,10 @@ class WeatherCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Kelembaban:", style: TextStyle(color: Colors.white70, fontSize: 14)),
-              Text(humidity, style: TextStyle(color: Colors.white, fontSize: 16)),
+              Text("Kelembaban:",
+                  style: TextStyle(color: Colors.white70, fontSize: 14)),
+              Text(humidity,
+                  style: TextStyle(color: Colors.white, fontSize: 16)),
             ],
           ),
         ],
